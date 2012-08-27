@@ -1,0 +1,175 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>me.bigchunk</groupId>
+    <artifactId>ex</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Examples in bigchunk.me</name>
+
+    <repositories>
+        <repository>
+            <id>cloudera</id>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+        </repository>
+    </repositories>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.6</java.version>
+        <compile.debug>true</compile.debug>
+
+        <hadoop.version>2.0.0-mr1-cdh4.0.0</hadoop.version>
+        <hadoop.common.version>2.0.0-cdh4.0.0</hadoop.common.version>
+        <hbase.version>0.92.1-cdh4.0.0</hbase.version>
+        <pig.version>0.9.2-cdh4.0.0</pig.version>
+
+        <org.mockito.version>1.8.5</org.mockito.version>
+        <org.junit.version>4.8.1</org.junit.version>
+    </properties>
+
+    <modules>
+        <module>protopig</module>
+    </modules>
+
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- APIs -->
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.1</version>
+            </dependency>
+
+            <!-- Hadoop -->
+            <dependency>
+                <groupId>org.apache.hadoop</groupId>
+                <artifactId>hadoop-core</artifactId>
+                <version>${hadoop.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>tomcat</groupId>
+                        <artifactId>jasper-compiler</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.mortbay.jetty</groupId>
+                        <artifactId>jetty</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.hadoop</groupId>
+                <artifactId>hadoop-common</artifactId>
+                <version>${hadoop.common.version}</version>
+            </dependency>
+            <!-- Hadoop testing -->
+            <dependency>
+                <groupId>org.apache.hadoop</groupId>
+                <artifactId>hadoop-hdfs</artifactId>
+                <classifier>tests</classifier>
+                <version>${hadoop.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.hadoop</groupId>
+                <artifactId>hadoop-test</artifactId>
+                <version>${hadoop.version}</version>
+            </dependency>
+
+            <!-- HBase -->
+            <dependency>
+                <groupId>org.apache.hbase</groupId>
+                <artifactId>hbase</artifactId>
+                <version>${hbase.version}</version>
+            </dependency>
+            <!-- HBase testing -->
+            <dependency>
+                <groupId>org.apache.hbase</groupId>
+                <artifactId>hbase</artifactId>
+                <classifier>tests</classifier>
+                <version>${hbase.version}</version>
+            </dependency>
+
+            <!-- Pig -->
+            <dependency>
+                <groupId>org.apache.pig</groupId>
+                <artifactId>pig</artifactId>
+                <version>${pig.version}</version>
+            </dependency>
+            <!-- Pig Testing -->
+            <dependency>
+                <groupId>org.apache.pig</groupId>
+                <artifactId>pigunit</artifactId>
+                <version>${pig.version}-SNAPSHOT</version>
+                <scope>test</scope>
+            </dependency>
+
+
+            <!-- Common Testing -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${org.junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${org.mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.jolira</groupId>
+                    <artifactId>onejar-maven-plugin</artifactId>
+                    <version>1.4.4</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <debug>${compile.debug}</debug>
+                        <showDeprecation>false</showDeprecation>
+                        <showWarnings>true</showWarnings>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <inherited>true</inherited>
+                    <configuration>
+                        <properties>
+                        </properties>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.3</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
