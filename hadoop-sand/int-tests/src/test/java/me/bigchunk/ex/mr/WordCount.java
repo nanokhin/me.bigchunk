@@ -11,14 +11,13 @@ import java.util.StringTokenizer;
 
 /**
  * vladvlaskin | 8/28/12/4:28 PM
+ * thankfull to Apache
  */
 public class WordCount {
 
     public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
-
         private Text word = new Text();
         private IntWritable one = new IntWritable(1);
-
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             String line = value.toString();
@@ -40,5 +39,4 @@ public class WordCount {
             context.write(key, new IntWritable(sum));
         }
     }
-
 }
