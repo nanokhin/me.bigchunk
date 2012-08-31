@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 
 /**
  * vladvlaskin | 8/28/12/4:28 PM
- * thankfull to Apache
+ * thankful to Apache
  */
 public class WordCount {
 
